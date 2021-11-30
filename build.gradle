@@ -1,0 +1,39 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-docker-plugin:7.1.0'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.0'
+    id 'com.bmuschko.docker-java-application' version '7.1.0'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.3")
+    implementation "com.github.hyperledger.iroha-java:client:6.1.0"
+    implementation "com.github.soramitsu:sora-sdk:0.3.15"
+}
+
+docker {
+    javaApplication {
+        maintainer = 'Rinat Kharisov "benjamin.muschko@gmail.com"'
+        images = ['openjdk:11-jre-slim']
+        jvmArgs = ['-Xms256m', '-Xmx2048m']
+    }
+}
